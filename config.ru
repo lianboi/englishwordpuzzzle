@@ -1,4 +1,8 @@
 
 $stdout.sync = true
+arr = Array.new
+File.foreach("collections.txt").with_index do |line, index|
+	arr.push(line)
+end
 
-run lambda { |env| [ 200, {}, "<p>Hello!</p>" ] }
+run Proc.new { |env| ['200', {'Content-Type' => 'text/html'}, arr] }
