@@ -12,12 +12,19 @@
 </form>
 <button id="submit">submit</button>
 <button id="clear">clear</button>
-<div>........</div>
+<div id="loader"><img src="loading.gif"/></div>
 <div  id="theresult"><ul></ul></div>
 </div>
 <script type="text/javascript">
+		$("#loader").hide();
 		$("#submit").on("click", function(evt){
+			$("#loader").show();
 			var thedata = '{"thechars":"'+$("#thechars").val().toLowerCase()+'","thelength":"'+$("#thelength").val().toLowerCase()+'"}';
+			if(!$("#thechars").val() || !$("#thelength").val()){
+				$("#loader").hide();
+				return 0;
+			}
+				
 			$.ajax({
 				type: "POST",
 				contentType: "application/json",
@@ -27,9 +34,14 @@
 					console.log(res.result);
 					res.result.forEach(function(val){
 						$("#theresult ul").append('<li>'+val+'</li>');
+						$("#loader").hide();
 					});
 				}
 			});
+		});
+		$("#clear").on("click", function(evt){
+			$("#thechars").val("");
+			$("#thelength").val("");
 		});
 </script>
 </body>
