@@ -1,11 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+</head>
+<body>
 <p>hello Lian!!</p>
+<div id="angcontroller">
 <form>
-	<input id="thechars">
-	<input id="thelength">
+	characters: <input id="thechars">
+	length: <input id="thelength">
 </form>
 <button id="submit">submit</button>
-<div id="theresult">........</div>
+<button id="clear">clear</button>
+<div>........</div>
+<div  id="theresult"><ul></ul></div>
+</div>
 <script type="text/javascript">
-		
+		$("#submit").on("click", function(evt){
+			var thedata = '{"thechars":"'+$("#thechars").val().toLowerCase()+'","thelength":"'+$("#thelength").val().toLowerCase()+'"}';
+			$.ajax({
+				type: "POST",
+				contentType: "application/json",
+				data: thedata,
+				url: "http://localhost:9292/compute",
+				success: function(res){
+					console.log(res.result);
+					res.result.forEach(function(val){
+						$("#theresult ul").append('<li>'+val+'</li>');
+					});
+				}
+			});
+		});
 </script>
+</body>
+</html>

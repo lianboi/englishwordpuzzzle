@@ -1,5 +1,6 @@
 require 'grape'
 require 'json'
+require 'rack/cors'
 
 $stdout.sync = true
 arr = Array.new
@@ -8,6 +9,14 @@ File.foreach("collections.txt").with_index do |line, index|
 end
 
 use Rack::Static, :index =>'index.html'
+
+use Rack::Cors do
+    allow do
+      origins '*'
+      # location of your API
+      resource '*', :headers => :any, :methods => [:get, :post, :options, :put]
+    end
+end
 
 class API< Grape::API
 	format :json
@@ -52,8 +61,11 @@ class API< Grape::API
 
 		puts "result:"
 		puts result
-		return result
+		return {"result"=>result}
 
+	end
+	get :hello do
+		return {"hello"=>"Lian"}
 	end
 end
 
