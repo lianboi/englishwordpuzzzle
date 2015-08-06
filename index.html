@@ -33,7 +33,7 @@
 				success: function(res){
 					console.log(res.result);
 					res.result.forEach(function(val){
-						$("#theresult ul").append('<li>'+val+'</li>');
+						$("#theresult ul").empty().append('<li>'+val+'</li>');
 						$("#loader").hide();
 					});
 				}
@@ -42,6 +42,7 @@
 		$("#clear").on("click", function(evt){
 			$("#thechars").val("");
 			$("#thelength").val("");
+			$("#theresult ul").empty();
 		});
 </script>
 </body>
