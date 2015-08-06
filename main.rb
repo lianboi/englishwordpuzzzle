@@ -5,9 +5,16 @@ perm = gets.chomp
 puts "enter length of the result"
 ln = gets.chomp
 ln = ln.to_i
+=begin
+File.foreach("test.txt").with_index do |line, index|
+	puts line = line.split("\n")[0] 
+	puts line.length
+end
+=end
 
-File.foreach("englishwords.txt").with_index do |line, index|
-        if(line.length == (ln+2))
+File.foreach("collections.txt").with_index do |line, index|
+		line = line.split("\n")[0]
+        if(line.length == (ln))
                 flag = false
                 for i in 0...perm.length
                         if(line[0] == perm[i])
@@ -26,7 +33,7 @@ combs.uniq!
 
 vocab.each do |val|
         combs.each do |txt|
-                if(val[0,ln] == txt)
+                if(val == txt)
                         puts combs.length
                         result.push(txt)
                         combs = combs - [txt]
